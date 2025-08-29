@@ -28,6 +28,7 @@ public class Consumer extends Thread{
                     while (queue.isEmpty()) {
                         queue.wait(); 
                     }
+                    Thread.sleep(2000);
                     int elem = queue.poll();
                     System.out.println("Consumer consumes " + elem);
                     queue.notifyAll(); 
