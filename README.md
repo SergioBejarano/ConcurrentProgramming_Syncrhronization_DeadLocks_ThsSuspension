@@ -21,6 +21,17 @@ Teniendo en cuenta los conceptos vistos de condición de carrera y sincronizaci�
 - La búsqueda distribuida se detenga (deje de buscar en las listas negras restantes) y retorne la respuesta apenas, en su conjunto, los hilos hayan detectado el número de ocurrencias requerido que determina si un host es confiable o no (_BLACK_LIST_ALARM_COUNT_).
 - Lo anterior, garantizando que no se den condiciones de carrera.
 
+En la nueva versión del buscador de listas negras se mejoraron tres partes clave: en HostBlackListSearchThread se añadió la verificación de una condición de parada global (shouldStop) para que cada hilo deje de trabajar apenas se alcance el número de ocurrencias requerido, evitando revisiones innecesarias. En HostBlackListsValidator se reemplazó la lógica de acumulación individual por una coordinación centralizada usando el estado compartido, lo que permite juntar resultados sin condiciones de carrera y detener la búsqueda en conjunto de forma temprana. Finalmente, la nueva clase SharedSearchStatus concentra el conteo global de ocurrencias, la lista de servidores detectados y la bandera de parada, todo sincronizado para garantizar consistencia entre hilos, convirtiéndose en el punto seguro de comunicación entre ellos.
+
+En HostBlackListSearchThread, se agrega condicional preguntando si debería parar o no y si alcanza el límite, acaba la ejecución:
+<img width="601" height="197" alt="image" src="https://github.com/user-attachments/assets/390bc111-4980-4bb1-83bc-27282f52ffbe" />
+
+Se actualiza stop en SharedSearchStatus:
+
+<img width="495" height="199" alt="image" src="https://github.com/user-attachments/assets/4d98b6bb-2453-4a59-bf27-769aa8db3ea5" />
+
+
+
 ##### Parte III. – Avance para el martes, antes de clase.
 
 Sincronización y Dead-Locks.
