@@ -101,7 +101,6 @@ solo la transfieren de uno a otro, la suma total de los puntos de vida será:
 $$ TotalVida = n \times VidaInicial $$
 
 
-
 Donde *n* es la cantidad de jugadores y *VidaInicial* es la definida en el atributo *DEFAULT_IMMORTAL_HEALTH*, es decir que para este caso:
 
 $$ TotalVida = n \times 100 $$
@@ -110,11 +109,18 @@ $$ TotalVida = n \times 100 $$
 
 Al ejecutar la aplicación podemos observar que para empezar se crean 3 inmortales. 
 
-{Imagen interfaz}
+<img width="921" height="342" alt="image" src="https://github.com/user-attachments/assets/a937d49e-7255-4710-859d-1f2a330dd4b7" />
 
 Con el botón 'start' iniciamos el juego y con 'pause and check' podemos observar en un instante la vida de cada jugador y su sumatoria.
 
-{Imagenes de pausar}
+<img width="921" height="343" alt="image" src="https://github.com/user-attachments/assets/0c0ee3d4-8545-442d-a778-d17c2c0cc6a9" />
+
+
+<img width="921" height="341" alt="image" src="https://github.com/user-attachments/assets/e905e924-6f44-49b5-883b-a0f4485eef93" />
+
+
+<img width="921" height="333" alt="image" src="https://github.com/user-attachments/assets/8a426fa3-b804-4537-9b82-8146f24e61e9" />
+
 
 Podemos observar que la vida total (la cual es la invariante) no se cumple, pues en cada caso se arrojaron distintos valores, unos más alejados de lo esperado (300 en este caso).
 
@@ -200,7 +206,13 @@ En el ActionListener del botón de *resume* se hace el mismo ciclo para reanudar
 No, aún no se cumple la invariante pues el valor de la vida total cambia al hacer clic múltiples veces en el botón.
 Es posible que dos hilos ataquen a un mismo hilo, generando una condición carrera.
 
-{Imagen de invariante falsa}
+<img width="921" height="338" alt="image" src="https://github.com/user-attachments/assets/36b2db0c-b483-484c-9265-e175c07452c7" />
+
+
+<img width="921" height="336" alt="image" src="https://github.com/user-attachments/assets/069da2fd-f25d-46f7-8810-a0dc651cd54d" />
+
+
+<img width="921" height="342" alt="image" src="https://github.com/user-attachments/assets/2aa6ea22-8602-4066-95d3-871b34382c3a" />
 
 
 *6. Identifique posibles regiones críticas en lo que respecta a la pelea de los inmortales. Implemente una estrategia de bloqueo que evite las condiciones de carrera. Recuerde que si usted requiere usar dos o más ‘locks’ simultáneamente, puede usar bloques sincronizados anidados:*
@@ -265,11 +277,22 @@ Así que para implementar una estrategia debemos:
 
 Se pone a correr el programa nuevamente:
 
-{Imagenes pruebas}
+<img width="921" height="344" alt="image" src="https://github.com/user-attachments/assets/2afc0264-3353-429a-86f5-5ebdf7e3bbf6" />
+
+
+<img width="921" height="339" alt="image" src="https://github.com/user-attachments/assets/3b9a1fb2-cca9-4b23-8b09-81c02db074b2" />
+
+
+<img width="921" height="336" alt="image" src="https://github.com/user-attachments/assets/3ab27165-2ff7-4974-b380-e77c523332b1" />
+
 
 Se evidencia que ahora la invariante se cumple. El programa no se detuvo y funcionó correctamente con casos de 10 y 50 hilos.
 
-{Imagenes prueba 10 y 50}
+<img width="921" height="342" alt="image" src="https://github.com/user-attachments/assets/f6ddc144-c055-420e-b59b-250ca5da7a7b" />
+
+
+<img width="921" height="347" alt="image" src="https://github.com/user-attachments/assets/378ab051-6963-48fb-9f98-82f92bd89852" />
+
 
 *8. Plantee una estrategia para corregir el problema antes identificado (puede revisar de nuevo las páginas 206 y 207 de _Java Concurrency in Practice_).*
 
@@ -280,13 +303,12 @@ El problema no ocurrió ya que se trató el posible deadlock correctamente.
 Probamos nuevamente con los casos solicitados, en cada caso se pausa repetidamente para comprobar que la invariante se cumpla:
 
 - 100 inmortales
-{Imagen 100}
+<img width="921" height="836" alt="image" src="https://github.com/user-attachments/assets/d5c46795-44eb-46ea-ae6f-1247e81d1ca4" />
 
 - 1000 inmortales
-{Imagen 1000}
+<img width="921" height="595" alt="image" src="https://github.com/user-attachments/assets/e21999e8-b603-456c-ba2f-65f97833864e" />
 
-- 10000 inmortales
-{Imagen 10000}
+- 10000 inmortales: Por limitaciones del hardware no fue posible ejecutar este caso.
 
 
 *10. Un elemento molesto para la simulación es que en cierto punto de la misma hay pocos 'inmortales' vivos realizando peleas fallidas con 'inmortales' ya muertos. Es necesario ir suprimiendo los inmortales muertos de la simulación a medida que van muriendo. Para esto:*
@@ -313,9 +335,8 @@ Se realiza esta implementación inicial:
 ```
 
 La cual genera casos como este, donde varios hilos escogen un hilo que ya se encuentra "eliminado" de la lista:
-{imagen borar}
 
-
+<img width="921" height="132" alt="image" src="https://github.com/user-attachments/assets/2640ebf6-9bc7-498b-8588-e34ee9032040" />
 
 
 * *Corrija el problema anterior __SIN hacer uso de sincronización__, pues volver secuencial el acceso a la lista compartida de inmortales haría extremadamente lenta la simulación.*
@@ -367,7 +388,7 @@ Para corregir el problema se realizan las siguientes implementaciones:
 Con esto ya podemos comprobar que efectivamente funciona, ya que al morir im0 este deja de aparecer en la 
 simulación y su vida aparece como 0.
 
-{Imagen de im0 muerto}
+<img width="921" height="337" alt="image" src="https://github.com/user-attachments/assets/2a6a35ac-1283-4302-981f-9901154c1d44" />
 
 *11. Para finalizar, implemente la opción STOP.*
 
