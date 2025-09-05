@@ -10,8 +10,39 @@
 Control de hilos con wait/notify. Productor/consumidor.
 
 1. Revise el funcionamiento del programa y ejecútelo. Mientras esto ocurren, ejecute jVisualVM y revise el consumo de CPU del proceso correspondiente. A qué se debe este consumo?, cual es la clase responsable?
+
+
+<img width="2879" height="1699" alt="image" src="https://github.com/user-attachments/assets/2a3b1a0e-5974-45b3-b1f7-feffc579cfe0" />
+
+Se ejecutan dos hilos: uno productor, que agrega un elemento a la cola cada segundo, y uno consumidor, que intenta extraer elementos de manera continua dentro de un ciclo infinito. El alto consumo de CPU se debe a que la clase Consumer no implementa ningún mecanismo de espera o sincronización, por lo que consulta constantemente la cola sin dar tiempo a que el productor acumule elementos disponibles.
+
+
 2. Haga los ajustes necesarios para que la solución use más eficientemente la CPU, teniendo en cuenta que -por ahora- la producción es lenta y el consumo es rápido. Verifique con JVisualVM que el consumo de CPU se reduzca.
+
+Se realizaron ajustes a las clases productor y consumidor haciendo uso de los métodos wait() y notifyAll(), lo que resultó en una solución más eficiente:
+
+<img width="2879" height="1694" alt="image" src="https://github.com/user-attachments/assets/1654cf0a-49c3-4da6-9fa7-58eaa961e1b7" />
+
+
+
+En el consumidor, se verifica que si hay elementos entonces proceda a tomar el que está en la cabeza de la cola (método `poll()`):
+
+<img width="909" height="386" alt="image" src="https://github.com/user-attachments/assets/b54e4e22-aea5-490a-940c-d2fe46c050c5" />
+
+
 3. Haga que ahora el productor produzca muy rápido, y el consumidor consuma lento. Teniendo en cuenta que el productor conoce un límite de Stock (cuantos elementos debería tener, a lo sumo en la cola), haga que dicho límite se respete. Revise el API de la colección usada como cola para ver cómo garantizar que dicho límite no se supere. Verifique que, al poner un límite pequeño para el 'stock', no haya consumo alto de CPU ni errores.
+
+
+En el productor, se verifica que no sobrepase el límite:
+
+<img width="1102" height="535" alt="image" src="https://github.com/user-attachments/assets/8dbbb524-1ba1-4369-84b9-262dd2f7a36c" />
+
+En la siguiente imagen se verifca que efectivamente al poner un límite pequeño para el stock, aún así no hay consumo alto de CPU ni errores:
+
+<img width="2879" height="1703" alt="image" src="https://github.com/user-attachments/assets/a662cfbb-d061-436a-8570-106578b5d8c2" />
+
+
+<img width="2105" height="679" alt="image" src="https://github.com/user-attachments/assets/dfc6be4f-b09c-4d3a-9a65-bfd447ca59b2" />
 
 
 ##### Parte II. – Antes de terminar la clase.
@@ -24,6 +55,7 @@ Teniendo en cuenta los conceptos vistos de condición de carrera y sincronizaci�
 En la nueva versión del buscador de listas negras se mejoraron tres partes clave: en HostBlackListSearchThread se añadió la verificación de una condición de parada global (shouldStop) para que cada hilo deje de trabajar apenas se alcance el número de ocurrencias requerido, evitando revisiones innecesarias. En HostBlackListsValidator se reemplazó la lógica de acumulación individual por una coordinación centralizada usando el estado compartido, lo que permite juntar resultados sin condiciones de carrera y detener la búsqueda en conjunto de forma temprana. Finalmente, la nueva clase SharedSearchStatus concentra el conteo global de ocurrencias, la lista de servidores detectados y la bandera de parada, todo sincronizado para garantizar consistencia entre hilos, convirtiéndose en el punto seguro de comunicación entre ellos.
 
 En HostBlackListSearchThread, se agrega condicional preguntando si debería parar o no y si alcanza el límite, acaba la ejecución:
+
 <img width="601" height="197" alt="image" src="https://github.com/user-attachments/assets/390bc111-4980-4bb1-83bc-27282f52ffbe" />
 
 Se actualiza stop en SharedSearchStatus:
