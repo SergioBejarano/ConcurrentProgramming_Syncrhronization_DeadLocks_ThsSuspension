@@ -35,14 +35,16 @@ En el consumidor, se verifica que si hay elementos entonces proceda a tomar el q
 
 En el productor, se verifica que no sobrepase el límite:
 
-<img width="1102" height="535" alt="image" src="https://github.com/user-attachments/assets/8dbbb524-1ba1-4369-84b9-262dd2f7a36c" />
+<img width="1014" height="504" alt="image" src="https://github.com/user-attachments/assets/aaf0c572-27cd-4bc6-ab1c-1540e88f15cd" />
+
+Nota: se deja comentado el tiempo de espera de 1 segundo porque en este punto 3 se pide que el productor produzca más rápido.
+
 
 En la siguiente imagen se verifca que efectivamente al poner un límite pequeño para el stock, aún así no hay consumo alto de CPU ni errores:
 
 <img width="2879" height="1703" alt="image" src="https://github.com/user-attachments/assets/a662cfbb-d061-436a-8570-106578b5d8c2" />
 
 
-<img width="2105" height="679" alt="image" src="https://github.com/user-attachments/assets/dfc6be4f-b09c-4d3a-9a65-bfd447ca59b2" />
 
 
 ##### Parte II. – Antes de terminar la clase.
