@@ -1,0 +1,6 @@
+Al analizar el funcionamiento de la simulación, se encontró que eliminar inmortales muertos de la lista compartida sí
+puede generar una condición de carrera. Esto ocurre porque mientras un hilo recorre la lista de inmortales para elegir
+a su oponente, otro hilo puede estar eliminando elementos al mismo tiempo.
+
+Al ejecutar la simulación con muchos inmortales, el problema que se observa es que aparecen accesos inconsistentes a la
+lista y hay peleas con inmortales que ya no existen.
